@@ -1,0 +1,17 @@
+﻿<Window x:Class="Schulung.GameOver"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Height="450" Width="500" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Image Source="Images\gameOver.png" Grid.Row="0" />
+        <TextBlock x:Name="LabelGameOverAttack" Margin="0,0,0,5" HorizontalAlignment="Center" Text="Sie wurden von einer anderen Nation angegriffen!!" FontSize="14" TextWrapping="Wrap" TextTrimming="WordEllipsis" Grid.Row="2" />
+        <TextBlock x:Name="LabelGameOverAssault" Margin="0,0,0,5" HorizontalAlignment="Center" Text="Sie wurden Ziel eines Terroranschlags!!" FontSize="14" TextWrapping="Wrap" TextTrimming="WordEllipsis" Grid.Row="3" />
+        <TextBlock x:Name="LabelGameOverEconomyCrises" Margin="0,0,0,5" HorizontalAlignment="Center" Text="Ihre Wirtschaft ist zusammengebrochen!!" FontSize="14" TextWrapping="Wrap" TextTrimming="WordEllipsis" Grid.Row="4" />
+    </Grid>
+</Window>

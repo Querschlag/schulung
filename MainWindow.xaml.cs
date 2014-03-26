@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Schulung.Logic;
 
 namespace Schulung
 {
@@ -27,7 +28,17 @@ namespace Schulung
         /// <summary>
         ///  storage for the game class
         /// </summary>
-        private Run _run;
+        private IGame _game;
+
+        /// <summary>
+        ///  storage for the check class
+        /// </summary>
+        private Check _check;
+
+        /// <summary>
+        ///  storage for the game over dialog
+        /// </summary>
+        private GameOver _gameOverDialog;
 
         /// <summary>
         ///  default constructor
@@ -37,10 +48,84 @@ namespace Schulung
             InitializeComponent();
 
             // create game class
-            _run = new Run(Points);
+            _game = new Game(Points);
+
+            // create check class
+            _check = new Check();
+
+            // set events
+            _check.Attack += OnAttack;
+            _check.Assault += OnAssault;
+            _check.EconomyCrises += OnEconomyCrises;
 
             // change points
             OnChangePoints();
+        }
+
+        /// <summary>
+        ///  method called on economy crises
+        /// </summary>
+        private void OnEconomyCrises()
+        {
+            // check if game over dialog exist
+            if (this._gameOverDialog == null)
+            {
+                // create game over dialog
+                this._gameOverDialog = new GameOver();
+
+                // show dialog
+                this._gameOverDialog.Show();
+
+                // hide current window
+                this.Hide();
+            }
+
+            // set economy crises information
+            this._gameOverDialog.SetInformationEconomyCrises();
+        }
+
+        /// <summary>
+        ///  method called on assault
+        /// </summary>
+        private void OnAssault()
+        {
+            // check if game over dialog exist
+            if (this._gameOverDialog == null)
+            {
+                // create game over dialog
+                this._gameOverDialog = new GameOver();
+
+                // show dialog
+                this._gameOverDialog.Show();
+
+                // hide current window
+                this.Hide();
+            }
+
+            // set assault information
+            this._gameOverDialog.SetInformationAssault();
+        }
+
+        /// <summary>
+        ///  method called on attack
+        /// </summary>
+        private void OnAttack()
+        {
+            // check if game over dialog exist
+            if (this._gameOverDialog == null)
+            {
+                // create game over dialog
+                this._gameOverDialog = new GameOver();
+
+                // show dialog
+                this._gameOverDialog.Show();
+
+                // hide current window
+                this.Hide();
+            }
+
+            // set attack information
+            this._gameOverDialog.SetInformationAttack();
         }
 
         /// <summary>
@@ -64,7 +149,7 @@ namespace Schulung
             int sum = this.PointsCountry.Value + this.PointsEconomy.Value + this.PointsTerror.Value + this.PointsResearch.Value;
 
             // auto disable or enable next round button
-            this.ButtonStart.IsEnabled = sum == Points;
+            this.ButtonStart.IsEnabled = sum <= Points;
         }
 
         /// <summary>
@@ -111,7 +196,25 @@ namespace Schulung
         private void ButtonStart_Click(object sender, RoutedEventArgs e)
         {
             // call main
-            // _run.Main((int)this.SliderCountry.Value, (int)this.SliderEconomy.Value, (int)this.SliderTerror.Value, (int)this.SliderResearch.Value);
+            _game.Run(PointsCountry.Value, PointsEconomy.Value, PointsTerror.Value, PointsResearch.Value);
+
+            // check current state
+            _check.CheckCurrentState(_game);
+
+            // reset points country
+            this.PointsCountry.Reset();
+
+            // reset points economy
+            this.PointsEconomy.Reset();
+
+            // reset points terror
+            this.PointsTerror.Reset();
+
+            // reset points research
+            this.PointsResearch.Reset();
+
+            // change points
+            OnChangePoints();
         }
     }
 }
