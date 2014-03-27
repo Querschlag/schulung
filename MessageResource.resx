@@ -117,8 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="String1" xml:space="preserve">
-    <value>x</value>
-    <comment>description</comment>
+  <data name="GameEventCountry1" xml:space="preserve">
+    <value>Deutschland: Neuer Innenminister fordert Verschlüsselungspflicht für deutsche Emailprovider.</value>
+    <comment></comment>
+  </data>
+  <data name="GameEventCountry2" xml:space="preserve">
+    <value>Russland ist empört über das Ausmaß der Spionage und beginnt mit der Suche nach Maulwürfen in den eigenen Reihen.</value>
+    <comment></comment>
+  </data>
+  <data name="GameEventCountry3" xml:space="preserve">
+    <value>Nach den Enthüllungen von Edward Snowden: China verstärkt seine Cyberabwehr und bereitet sich auf zukünftige Angriffe vor.</value>
+    <comment></comment>
+  </data>
+  <data name="GameEventEconomy1" xml:space="preserve">
+    <value>China blockiert ausländische Zugriffe mit großer Firewall um innländische Firmen zu schützen.</value>
+    <comment></comment>
+  </data>
+  <data name="GameEventEconomy2" xml:space="preserve">
+    <value>Deutsche Firmen setzten zunehmend auf eigene Cloudlösung. Nutzung von Dropbox und Google Drive geht zurück.</value>
+    <comment></comment>
+  </data>
+  <data name="GameEventEconomy3" xml:space="preserve">
+    <value>Viele Firmen setzen auf abgeschottete Inselsysteme für Forschungseinrichtungen um Leaks zu verhindern.</value>
+    <comment></comment>
+  </data>
+  <data name="GameEventTerror1" xml:space="preserve">
+    <value>Syrische Rebellen erstehen auf dem Schwarzmarkt Atomwaffen zum Schnäppchenpreis. Die Terrorgefahr steigt!</value>
+    <comment></comment>
+  </data>
+  <data name="GameEventTerror2" xml:space="preserve">
+    <value>Eins der berüchtigtesten Terroristencamps ist nun auch auf Facebook vertreten. Über 5000 Nutzern gefällt das...</value>
+    <comment></comment>
+  </data>
+  <data name="GameEventTerror3" xml:space="preserve">
+    <value>Immer mehr Extremisten nutzen Wikipedia für die Verbreitung von Propagandamaterial.</value>
+    <comment></comment>
   </data>
 </root>
