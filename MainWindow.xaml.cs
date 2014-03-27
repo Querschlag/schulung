@@ -148,6 +148,9 @@ namespace Schulung
             // calculate sum
             int sum = this.PointsCountry.Value + this.PointsEconomy.Value + this.PointsTerror.Value + this.PointsResearch.Value;
 
+            // set points left
+            this.LabenPoints.Text = (Points - sum).ToString("0");
+
             // auto disable or enable next round button
             this.ButtonStart.IsEnabled = sum <= Points;
         }
