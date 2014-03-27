@@ -58,6 +58,9 @@ namespace Schulung
             // create game class
             _game = new Game(Points);
 
+            // set event hanlder
+            _game.Message += OnMessage;
+
             // create check class
             _check = new Check();
 
@@ -68,6 +71,16 @@ namespace Schulung
 
             // change points
             OnChangePoints();
+        }
+
+        /// <summary>
+        ///  method called on message
+        /// </summary>
+        /// <param name="message"> message to show </param>
+        private void OnMessage(string message)
+        {
+            // show message in message box
+            MessageBox.Show(message, "Achtung", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         /// <summary>

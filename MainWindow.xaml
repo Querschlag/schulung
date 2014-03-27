@@ -32,14 +32,14 @@
         </Image>
         <StackPanel Grid.Column="3" Grid.Row="1">
             <TextBlock VerticalAlignment="Top" TextWrapping="Wrap" TextTrimming="WordEllipsis" FontSize="14" FontWeight="Bold">
-                Sie sind General Keith B. Alexander, der Direktor der NSA. Verteilen Sie Ihr Budget von 11 Milliarden Dollar auf die untenstehenden Bereiche.
+                Sie sind General Keith B. Alexander, Direktor der NSA. Verteilen Sie Ihr Budget von 11 Milliarden Dollar auf die untenstehenden Bereiche.
             </TextBlock>
             <TextBlock VerticalAlignment="Top" TextWrapping="Wrap" TextTrimming="WordEllipsis" FontSize="13" FontWeight="Bold">
                 <LineBreak/>Aktuelles Jahr: <Run x:Name="LabelYear" />
             </TextBlock>
         </StackPanel>
         <TextBlock VerticalAlignment="Bottom" TextWrapping="Wrap" TextTrimming="WordEllipsis" Grid.Column="3" Grid.Row="1" FontSize="13">
-            <Run x:Name="LabenPoints" FontWeight="Bold" /><Run Text=" Milliarden $" FontWeight="Bold" /> übrig.
+            <Run x:Name="LabenPoints" FontWeight="Bold" /><Run Text=" Milliarden Dollar" FontWeight="Bold" /> übrig.
         </TextBlock>
 
         <TextBlock Text="Auslandsüberwachung:" Grid.Row="4" Grid.Column="1" Margin="0,0,0,15" />

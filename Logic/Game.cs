@@ -6,6 +6,12 @@ using System.Text;
 namespace Schulung.Logic
 {
     /// <summary>
+    ///  event delegate for the on message event
+    /// </summary>
+    /// <param name="message"> message </param>
+    public delegate void OnMessage(string message);
+
+    /// <summary>
     ///  class implement the functionality of the game
     /// </summary>
     public class Game : IGame
@@ -14,6 +20,11 @@ namespace Schulung.Logic
         ///  storage for all point of the game
         /// </summary>
         private int _points = 0;
+
+        /// <summary>
+        ///  event handler for the message event
+        /// </summary>
+        public event OnMessage Message;
 
         /// <summary>
         ///  paramized constructor
@@ -46,38 +57,14 @@ namespace Schulung.Logic
         private double _countryPoints = 0;
 
         /// <summary>
-        ///  storage for the country points
-        /// </summary>
-        public double CountryPoints
-        {
-            get { return _countryPoints; }
-        }
-
-        /// <summary>
         ///  storage for the economy points
         /// </summary>
         private double _economyPoints = 0;
 
         /// <summary>
-        ///  storage for the economy points
-        /// </summary>
-        public double EconomyPoints
-        {
-            get { return _economyPoints; }
-        }
-
-        /// <summary>
         ///  storage for the terror points
         /// </summary>
         private double _terrorPoint = 0;
-
-        /// <summary>
-        ///  storage for the terror points
-        /// </summary>
-        public double TerrorPoint
-        {
-            get { return _terrorPoint; }
-        }
 
         /// <summary>
         ///  storage for the research points
@@ -119,14 +106,81 @@ namespace Schulung.Logic
             // calculate danger
             this.CalculateDanger();
 
+            // calculate changes country points
+            double changesCountryPoints = country - GetShareOf(economy);
+
             // increase country
-            this._countryPoints += country - GetShareOf(economy);
+            this._countryPoints += changesCountryPoints;
+
+            // calculate changes economy points
+            double changesEconomyPoints = (economy - GetShareOf(country)) - GetShareOf(terror);
 
             // increase economy
-            this._economyPoints += (economy - GetShareOf(country)) - GetShareOf(terror);
+            this._economyPoints += changesEconomyPoints;
+
+            // calculate changes terror points
+            double changesTerrorPoints = terror - GetShareOf(economy);
 
             // increase terror
-            this._terrorPoint += terror - GetShareOf(economy);
+            this._terrorPoint += changesTerrorPoints;
+
+            // check if changes for the country points are lower then economy points and terror points
+            if (changesCountryPoints < changesEconomyPoints && changesCountryPoints < changesTerrorPoints)
+            {
+                // check and raise message event
+                if (Message != null) Message(GetCountryMessage());
+            }
+            // check if changes for economy points are lower then country points and terror points
+            else if (changesEconomyPoints < changesCountryPoints && changesEconomyPoints < changesTerrorPoints)
+            {
+                // check and raise message event
+                if (Message != null) Message(GetEconomyMessage());
+            }
+            // check if changes for the terror points are lower then country points and economy points
+            else if (changesTerrorPoints < changesCountryPoints && changesTerrorPoints < changesEconomyPoints)
+            {
+                // check and raise message event
+                if (Message != null) Message(GetTerrorMessage());
+            }
+        }
+
+        /// <summary>
+        ///  method to get country message
+        /// </summary>
+        /// <returns> country message </returns>
+        private string GetCountryMessage()
+        {
+            // country message to return
+            string result = string.Empty;
+
+            // return country message
+            return result;
+        }
+
+        /// <summary>
+        ///  method to get economy message
+        /// </summary>
+        /// <returns> economy message </returns>
+        private string GetEconomyMessage()
+        {
+            // economy message to return
+            string result = string.Empty;
+
+            // return economy message
+            return result;
+        }
+
+        /// <summary>
+        ///  method to get terror message
+        /// </summary>
+        /// <returns> economy message </returns>
+        private string GetTerrorMessage()
+        {
+            // terror message to return
+            string result = string.Empty;
+
+            // return terror message
+            return result;
         }
 
         /// <summary>
