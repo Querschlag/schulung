@@ -35,6 +35,9 @@ namespace Schulung.Logic
 
             // set default terror points
             this._terrorPoint = points;
+
+            // set research points
+            this._researchPoints = points;
         }
 
         /// <summary>
@@ -132,11 +135,15 @@ namespace Schulung.Logic
         /// <param name="research"> new research value </param>
         private void CalculateResearch(int research)
         {
-            // decrease research
-            this._researchPoints = this._points - Math.Log((this._researchPoints + research), _points);
+            // check research
+            if (research > 0)
+            {
+                // decrease research
+                this._researchPoints = this._points - Math.Log((this._researchPoints + research), _points);
 
-            // check point
-            if (this._researchPoints <= 0) this._researchPoints = 1;
+                // check point
+                if (this._researchPoints <= 0) this._researchPoints = 1;
+            }
         }
 
         /// <summary>
@@ -161,7 +168,7 @@ namespace Schulung.Logic
         private double GetShareOf(int value)
         {
             // return share of
-            return value * ((double)_random.Next(0, 5) / 100.00);
+            return value * ((double)_random.Next(0, 5) / 10.00);
         }
 
         /// <summary>
@@ -174,8 +181,8 @@ namespace Schulung.Logic
             int factor = (int)Math.Pow(10, 4);
 
             // maximum value
-            int maximum = (int)(Math.Round(this._researchPoints, 4) * factor);
-
+            int maximum = (int)(Math.Round(this._researchPoints == 0 ? 1: this._researchPoints, 4) * factor);
+            
             // generate random number
             double result = (double)this._random.Next(factor, maximum + 1) / factor;
 

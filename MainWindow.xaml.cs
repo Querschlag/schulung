@@ -23,7 +23,12 @@ namespace Schulung
         /// <summary>
         ///  storage for the points
         /// </summary>
-        private const int Points = 12;
+        private const int Points = 11;
+
+        /// <summary>
+        ///  storage for the year
+        /// </summary>
+        private int _year;
 
         /// <summary>
         ///  storage for the game class
@@ -46,6 +51,9 @@ namespace Schulung
         public MainWindow()
         {
             InitializeComponent();
+
+            // set default year
+            _year = DateTime.Now.Year;
 
             // create game class
             _game = new Game(Points);
@@ -151,6 +159,9 @@ namespace Schulung
             // set points left
             this.LabenPoints.Text = (Points - sum).ToString("0");
 
+            // set current year
+            this.LabelYear.Text = this._year.ToString("0000");
+
             // auto disable or enable next round button
             this.ButtonStart.IsEnabled = sum <= Points;
         }
@@ -198,6 +209,27 @@ namespace Schulung
         /// <param name="e"></param>
         private void ButtonStart_Click(object sender, RoutedEventArgs e)
         {
+            // calculate sum
+            int sum = this.PointsCountry.Value + this.PointsEconomy.Value + this.PointsTerror.Value + this.PointsResearch.Value;
+
+            // check sum 
+            if (sum == Points)
+            {
+                // go to next round
+                NextRound();
+            }
+            else if(MessageBox.Show("Sie haben nicht alle Punkte vergeben!\nWollen Sie trotzdem fortfahren?", "Warnung", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+            {
+                // go to next round
+                NextRound();
+            }
+        }
+
+        /// <summary>
+        ///  method to go to next round
+        /// </summary>
+        private void NextRound()
+        {
             // call main
             _game.Run(PointsCountry.Value, PointsEconomy.Value, PointsTerror.Value, PointsResearch.Value);
 
@@ -215,6 +247,9 @@ namespace Schulung
 
             // reset points research
             this.PointsResearch.Reset();
+
+            // increase year
+            this._year++;
 
             // change points
             OnChangePoints();
