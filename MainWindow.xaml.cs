@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Schulung.Logic;
+using System.Windows.Media.Animation;
 
 namespace Schulung
 {
@@ -20,6 +21,16 @@ namespace Schulung
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        ///  flag to test button responses
+        /// </summary>
+        private bool pointsControlResponseEnabled;
+
+        /// <summary>
+        ///  index for last test response output
+        /// </summary>
+        private int lastTestResponseIndex;
+
         /// <summary>
         ///  storage for the points
         /// </summary>
@@ -213,6 +224,43 @@ namespace Schulung
         {
             // set maximum
             this.PointsResearch.Maximum = Points - (this.PointsCountry.Value + this.PointsEconomy.Value + this.PointsTerror.Value);
+
+            if (this.pointsControlResponseEnabled)
+            {
+                // update label to test input events
+                String response = "";
+                //new Random().Next(0, 4)
+                switch (this.lastTestResponseIndex)
+                {
+                    case 0: response = "BÄM! Event!";
+                        break;
+                    case 1: response = "Du hast mich geklickt?";
+                        break;
+                    case 2: response = "Can't touch this";
+                        break;
+                    case 3: response = "He, lass das!";
+                        break;
+                    case 4: response = "Autsch";
+                        break;
+                }
+
+                if (this.lastTestResponseIndex < 4)
+                {
+                    this.lastTestResponseIndex++;
+                }
+                else
+                {
+                    this.lastTestResponseIndex = 0;
+                }
+                this.PointsControlTestLabel.Text = response;
+                
+                DoubleAnimation da = new DoubleAnimation();
+                da.From = 0;
+                da.To = 1;
+                da.AutoReverse = false;
+                da.Duration = new Duration(TimeSpan.FromSeconds(0.3));
+                this.PointsControlTestTextBlock.BeginAnimation(OpacityProperty, da);
+            }
         }
 
         /// <summary>
@@ -231,7 +279,7 @@ namespace Schulung
                 // go to next round
                 NextRound();
             }
-            else if(MessageBox.Show("Sie haben nicht alle Punkte vergeben!\nWollen Sie trotzdem fortfahren?", "Warnung", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+            else if(MessageBox.Show("Sie haben ihr Budget noch nicht komplett verteilt!\nWollen Sie trotzdem fortfahren?", "Warnung", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
             {
                 // go to next round
                 NextRound();
@@ -266,6 +314,12 @@ namespace Schulung
 
             // change points
             OnChangePoints();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.PointsControlTestLabel.Text = "";
+            this.pointsControlResponseEnabled = !this.pointsControlResponseEnabled;
         }
     }
 }

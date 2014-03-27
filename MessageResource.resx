@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="GameEventCountry1" xml:space="preserve">
-    <value>Deutschland: Neuer Innenminister fordert Verschlüsselungspflicht für deutsche Emailprovider.</value>
+    <value>Deutschland: Neue Datenschutzministerin fordert PGP-Verschlüsselung für parlamentarischen Emailverkehr.</value>
     <comment></comment>
   </data>
   <data name="GameEventCountry2" xml:space="preserve">

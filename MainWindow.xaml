@@ -32,7 +32,7 @@
         </Image>
         <StackPanel Grid.Column="3" Grid.Row="1">
             <TextBlock VerticalAlignment="Top" TextWrapping="Wrap" TextTrimming="WordEllipsis" FontSize="14" FontWeight="Bold">
-                Sie sind General Keith B. Alexander, Direktor der NSA. Verteilen Sie Ihr Budget von 11 Milliarden Dollar auf die untenstehenden Bereiche.
+                Sie sind General Keith B. Alexander, Direktor der NSA. Verteilen Sie Ihr jährliches Budget von 11 Milliarden Dollar auf die untenstehenden Bereiche.
             </TextBlock>
             <TextBlock VerticalAlignment="Top" TextWrapping="Wrap" TextTrimming="WordEllipsis" FontSize="13" FontWeight="Bold">
                 <LineBreak/>Aktuelles Jahr: <Run x:Name="LabelYear" />
@@ -42,16 +42,19 @@
             <Run x:Name="LabenPoints" FontWeight="Bold" /><Run Text=" Milliarden Dollar" FontWeight="Bold" /> übrig.
         </TextBlock>
 
-        <TextBlock Text="Auslandsüberwachung:" Grid.Row="4" Grid.Column="1" Margin="0,0,0,15" />
-        <TextBlock Text="Wirtschaftsspionage:" Grid.Column="1" Grid.Row="5" Margin="0,0,0,15" />
-        <TextBlock Text="Terroristenverfolgung:" Grid.Row="6" Grid.Column="1" Margin="0,0,0,15" />
-        <TextBlock Text="Forschung:" Grid.Row="7" Grid.Column="1" Margin="0,0,0,15" />
+        <TextBlock Text="Auslandsüberwachung:" Grid.Row="4" Grid.Column="1" Margin="0,0,0,15" HorizontalAlignment="Right" FontSize="14" />
+        <TextBlock Text="Wirtschaftsspionage:" Grid.Column="1" Grid.Row="5" Margin="0,0,0,15" HorizontalAlignment="Right" FontSize="14" />
+        <TextBlock Text="Terroristenverfolgung:" Grid.Row="6" Grid.Column="1" Margin="0,0,0,15" HorizontalAlignment="Right" FontSize="14" />
+        <TextBlock Text="Forschung:" Grid.Row="7" Grid.Column="1" Margin="0,0,0,15" HorizontalAlignment="Right" FontSize="14" />
 
         <schule:PointsControl x:Name="PointsCountry" Grid.Row="4" Grid.Column="3" ValueChanged="OnChangePoints" />
         <schule:PointsControl x:Name="PointsEconomy" Grid.Row="5" Grid.Column="3" ValueChanged="OnChangePoints" />
         <schule:PointsControl x:Name="PointsTerror" Grid.Row="6" Grid.Column="3" ValueChanged="OnChangePoints" />
         <schule:PointsControl x:Name="PointsResearch" Grid.Row="7" Grid.Column="3" ValueChanged="OnChangePoints"/>
-
+        <TextBlock x:Name="PointsControlTestTextBlock" VerticalAlignment="Top" Grid.Row="8" Grid.Column="3" TextWrapping="Wrap" TextTrimming="WordEllipsis" FontSize="14" FontWeight="Bold" Height="20" Foreground="#02314F">
+            <Run x:Name="PointsControlTestLabel" />
+        </TextBlock>
         <Button x:Name="ButtonStart" Click="ButtonStart_Click" Content="Nächste Jahr" Grid.Row="9" Grid.Column="3" HorizontalAlignment="Right" Width="100"/>
+        <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0" Grid.Row="8" VerticalAlignment="Top" Width="245" Height="49" Opacity="0" Click="Button_Click"/>
     </Grid>
 </Window>
