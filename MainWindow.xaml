@@ -55,6 +55,6 @@
             <Run x:Name="PointsControlTestLabel" />
         </TextBlock>
         <Button x:Name="ButtonStart" Click="ButtonStart_Click" Content="Nächste Jahr" Grid.Row="9" Grid.Column="3" HorizontalAlignment="Right" Width="100"/>
-        <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0" Grid.Row="8" VerticalAlignment="Top" Width="245" Height="49" Opacity="0" Click="Button_Click"/>
+        <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0" Grid.Row="8" VerticalAlignment="Top" Width="245" Height="49" Opacity="0" Click="ButtonStart_Click"/>
     </Grid>
 </Window>
