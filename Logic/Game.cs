@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 
 namespace Schulung.Logic
@@ -10,6 +13,13 @@ namespace Schulung.Logic
     /// </summary>
     /// <param name="message"> message </param>
     public delegate void OnMessage(string message);
+
+    /// <summary>
+    ///  event delegate for the budget reduction event
+    /// </summary>
+    /// <param name="points"> budget points </param>
+    /// <param name="message"> message </param>
+    public delegate void OnBudget(int points);
 
     /// <summary>
     ///  class implement the functionality of the game
@@ -22,9 +32,19 @@ namespace Schulung.Logic
         private int _points = 0;
 
         /// <summary>
+        ///  storage for the list of used events
+        /// </summary>
+        private List<string> _usedEvents = new List<string>();
+
+        /// <summary>
         ///  event handler for the message event
         /// </summary>
         public event OnMessage Message;
+
+        /// <summary>
+        ///  event handler for the budget reduction
+        /// </summary>
+        public event OnBudget Budget;
 
         /// <summary>
         ///  paramized constructor
@@ -106,41 +126,72 @@ namespace Schulung.Logic
             // calculate danger
             this.CalculateDanger();
 
-            // calculate changes country points
-            double changesCountryPoints = country - GetShareOf(economy);
-
             // increase country
-            this._countryPoints += changesCountryPoints;
-
-            // calculate changes economy points
-            double changesEconomyPoints = (economy - GetShareOf(country)) - GetShareOf(terror);
+            this._countryPoints += country - GetShareOf(economy);
 
             // increase economy
-            this._economyPoints += changesEconomyPoints;
-
-            // calculate changes terror points
-            double changesTerrorPoints = terror - GetShareOf(economy);
+            this._economyPoints += (economy - GetShareOf(country)) - GetShareOf(terror);
 
             // increase terror
-            this._terrorPoint += changesTerrorPoints;
+            this._terrorPoint += terror - GetShareOf(economy);
 
-            // check if changes for the country points are lower then economy points and terror points
-            if (changesCountryPoints < changesEconomyPoints && changesCountryPoints < changesTerrorPoints)
+            // check attack, assault and economy crises
+            if (this.IsAttack == false && this.IsAssault == false && this.IsEconomyCrises == false)
             {
-                // check and raise message event
-                if (Message != null) Message(GetCountryMessage());
-            }
-            // check if changes for economy points are lower then country points and terror points
-            else if (changesEconomyPoints < changesCountryPoints && changesEconomyPoints < changesTerrorPoints)
-            {
-                // check and raise message event
-                if (Message != null) Message(GetEconomyMessage());
-            }
-            // check if changes for the terror points are lower then country points and economy points
-            else if (changesTerrorPoints < changesCountryPoints && changesTerrorPoints < changesEconomyPoints)
-            {
-                // check and raise message event
-                if (Message != null) Message(GetTerrorMessage());
+                // calculate difference country points
+                double diffCountry = this._countryPoints - this._dangerCountry;
+
+                // calculate difference economy points
+                double diffEconomy = this._economyPoints - this._dangerEconomy;
+
+                // calculate difference terror points
+                double diffTerror = this._terrorPoint - this._dangerTerror;
+
+                // check if changes for the country points are lower then economy points and terror points
+                if (diffCountry < diffEconomy && diffCountry < diffTerror)
+                {
+                    // check and raise message event
+                    if (Message != null) Message(GetCountryMessage());
+                }
+                // check if changes for economy points are lower then country points and terror points
+                else if (diffEconomy < diffCountry && diffEconomy < diffTerror)
+                {
+                    // check and raise message event
+                    if (Message != null) Message(GetEconomyMessage());
+                }
+                // check if changes for the terror points are lower then country points and economy points
+                else if (diffTerror < diffCountry && diffTerror < diffEconomy)
+                {
+                    // check and raise message event
+                    if (Message != null) Message(GetTerrorMessage());
+                }
+
+                // get random event
+                int randomEvent = _random.Next(0, 10);
+
+                // check random event number
+                if (randomEvent == 3)
+                {
+                    // new budget
+                    double budget = this._points * this._random.Next(1, 4);
+
+                    // increase budget
+                    if (Budget != null) Budget((int)Math.Ceiling(budget));
+
+                    // show message
+                    if (Message != null) Message(MessageResource.GameEventIncreaseBudget);
+                }
+                else if (randomEvent == 5)
+                {
+                    // new budget
+                    double budget = this._points / this._random.Next(1, 4);
+
+                    // increase budget
+                    if (Budget != null) Budget((int)Math.Ceiling(budget));
+
+                    // show message
+                    if (Message != null) Message(MessageResource.GameEventGovermentShutdown);
+                }
             }
         }
 
@@ -153,8 +204,68 @@ namespace Schulung.Logic
             // country message to return
             string result = string.Empty;
 
+            // list of game events
+            List<string> events = new List<string>();
+
+            // get resources of executing assembly
+            ResourceReader reader = ReadResources();
+
+            // iteration over all resources
+            foreach (DictionaryEntry resource in reader)
+            {
+                // convert key to string
+                string keyString = resource.Key == null ? string.Empty : resource.Key.ToString();
+
+                // check key
+                if (string.IsNullOrWhiteSpace(keyString) == false)
+                {
+                    // check key and value
+                    if (keyString.StartsWith("GameEventCountry") && resource.Value != null)
+                    {
+                        // add game event
+                        events.Add(resource.Value.ToString());
+                    }
+                }
+            }
+
+            // check if all events are already used
+            if (events.TrueForAll(c => _usedEvents.Contains(c)) == false)
+            {
+                // iteration over all used events
+                foreach (string eventString in _usedEvents)
+                {
+                    // remove used event
+                    events.Remove(eventString);
+                }
+            }
+            else
+            {
+                // iteration over all events
+                foreach (string eventString in events)
+                {
+                    // remove used event
+                    _usedEvents.Remove(eventString);
+                }
+            }
+
+            // select random event
+            result = events[this._random.Next(0, events.Count)];
+
+            // add to used event
+            this._usedEvents.Add(result);
+
             // return country message
             return result;
+        }
+
+        /// <summary>
+        ///  method to read resources
+        /// </summary>
+        /// <returns> resourcen reader </returns>
+        private ResourceReader ReadResources()
+        {
+            // return resource readern
+            return new ResourceReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("Schulung.MessageResource.resources"));
         }
 
         /// <summary>
@@ -165,6 +276,56 @@ namespace Schulung.Logic
         {
             // economy message to return
             string result = string.Empty;
+
+            // list of game events
+            List<string> events = new List<string>();
+
+            // get resources of executing assembly
+            ResourceReader reader = ReadResources();
+
+            // iteration over all resources
+            foreach (DictionaryEntry resource in reader)
+            {
+                // convert key to string
+                string keyString = resource.Key == null ? string.Empty : resource.Key.ToString();
+
+                // check key
+                if (string.IsNullOrWhiteSpace(keyString) == false)
+                {
+                    // check key and value
+                    if (keyString.StartsWith("GameEventEconomy") && resource.Value != null)
+                    {
+                        // add game event
+                        events.Add(resource.Value.ToString());
+                    }
+                }
+            }
+
+            // check if all events are already used
+            if (events.TrueForAll(c => _usedEvents.Contains(c)) == false)
+            {
+                // iteration over all used events
+                foreach (string eventString in _usedEvents)
+                {
+                    // remove used event
+                    events.Remove(eventString);
+                }
+            }
+            else
+            {
+                // iteration over all events
+                foreach (string eventString in events)
+                {
+                    // remove used event
+                    _usedEvents.Remove(eventString);
+                }
+            }
+
+            // select random event
+            result = events[this._random.Next(0, events.Count)];
+
+            // add to used event
+            this._usedEvents.Add(result);
 
             // return economy message
             return result;
@@ -178,6 +339,56 @@ namespace Schulung.Logic
         {
             // terror message to return
             string result = string.Empty;
+
+            // list of game events
+            List<string> events = new List<string>();
+
+            // get resources of executing assembly
+            ResourceReader reader = ReadResources();
+
+            // iteration over all resources
+            foreach (DictionaryEntry resource in reader)
+            {
+                // convert key to string
+                string keyString = resource.Key == null ? string.Empty : resource.Key.ToString();
+
+                // check key
+                if (string.IsNullOrWhiteSpace(keyString) == false)
+                {
+                    // check key and value
+                    if (keyString.StartsWith("GameEventTerror") && resource.Value != null)
+                    {
+                        // add game event
+                        events.Add(resource.Value.ToString());
+                    }
+                }
+            }
+
+            // check if all events are already used
+            if (events.TrueForAll(c => _usedEvents.Contains(c)) == false)
+            {
+                // iteration over all used events
+                foreach (string eventString in _usedEvents)
+                {
+                    // remove used event
+                    events.Remove(eventString);
+                }
+            }
+            else
+            {
+                // iteration over all events
+                foreach (string eventString in events)
+                {
+                    // remove used event
+                    _usedEvents.Remove(eventString);
+                }
+            }
+
+            // select random event
+            result = events[this._random.Next(0, events.Count)];
+
+            // add to used event
+            this._usedEvents.Add(result);
 
             // return terror message
             return result;
@@ -235,8 +446,8 @@ namespace Schulung.Logic
             int factor = (int)Math.Pow(10, 4);
 
             // maximum value
-            int maximum = (int)(Math.Round(this._researchPoints == 0 ? 1: this._researchPoints, 4) * factor);
-            
+            int maximum = (int)(Math.Round(this._researchPoints == 0 ? 1 : this._researchPoints, 4) * factor);
+
             // generate random number
             double result = (double)this._random.Next(factor, maximum + 1) / factor;
 
@@ -247,7 +458,7 @@ namespace Schulung.Logic
         /// <summary>
         ///  storage for the attack flag
         /// </summary>
-        public bool IsAttack 
+        public bool IsAttack
         {
             get { return (this._dangerCountry > this._countryPoints); }
         }

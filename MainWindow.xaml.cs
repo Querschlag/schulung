@@ -12,7 +12,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Schulung.Logic;
-using System.Windows.Media.Animation;
 
 namespace Schulung
 {
@@ -22,19 +21,9 @@ namespace Schulung
     public partial class MainWindow : Window
     {
         /// <summary>
-        ///  flag to test button responses
-        /// </summary>
-        private bool pointsControlResponseEnabled;
-
-        /// <summary>
-        ///  index for last test response output
-        /// </summary>
-        private int lastTestResponseIndex;
-
-        /// <summary>
         ///  storage for the points
         /// </summary>
-        private const int Points = 11;
+        private int _points = 11;
 
         /// <summary>
         ///  storage for the year
@@ -67,10 +56,11 @@ namespace Schulung
             _year = DateTime.Now.Year;
 
             // create game class
-            _game = new Game(Points);
+            _game = new Game(_points);
 
-            // set event hanlder
+            // set event hanlders
             _game.Message += OnMessage;
+            _game.Budget += OnBudget;
 
             // create check class
             _check = new Check();
@@ -85,13 +75,23 @@ namespace Schulung
         }
 
         /// <summary>
+        ///  method to set budget reduction
+        /// </summary>
+        /// <param name="points"> budget points </param>
+        private void OnBudget(int points)
+        {
+            // set budget
+            this._points = points;
+        }
+
+        /// <summary>
         ///  method called on message
         /// </summary>
         /// <param name="message"> message to show </param>
         private void OnMessage(string message)
         {
             // show message in message box
-            MessageBox.Show(message, "Achtung", MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show(message, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         /// <summary>
@@ -181,13 +181,13 @@ namespace Schulung
             int sum = this.PointsCountry.Value + this.PointsEconomy.Value + this.PointsTerror.Value + this.PointsResearch.Value;
 
             // set points left
-            this.LabenPoints.Text = (Points - sum).ToString("0");
+            this.LabenPoints.Text = (_points - sum).ToString("0");
 
             // set current year
             this.LabelYear.Text = this._year.ToString("0000");
 
             // auto disable or enable next round button
-            this.ButtonStart.IsEnabled = sum <= Points;
+            this.ButtonStart.IsEnabled = sum <= _points;
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Schulung
         private void SetMaximumCountry()
         {
             // set maximum
-            this.PointsCountry.Maximum = Points - (this.PointsEconomy.Value + this.PointsTerror.Value + this.PointsResearch.Value);
+            this.PointsCountry.Maximum = _points - (this.PointsEconomy.Value + this.PointsTerror.Value + this.PointsResearch.Value);
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Schulung
         private void SetMaximumEconomy()
         {
             // set maximum
-            this.PointsEconomy.Maximum = Points - (this.PointsCountry.Value + this.PointsTerror.Value + this.PointsResearch.Value);
+            this.PointsEconomy.Maximum = _points - (this.PointsCountry.Value + this.PointsTerror.Value + this.PointsResearch.Value);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Schulung
         private void SetMaximumTerror()
         {
             // set maximum
-            this.PointsTerror.Maximum = Points - (this.PointsCountry.Value + this.PointsEconomy.Value + this.PointsResearch.Value);
+            this.PointsTerror.Maximum = _points - (this.PointsCountry.Value + this.PointsEconomy.Value + this.PointsResearch.Value);
         }
 
         /// <summary>
@@ -223,44 +223,7 @@ namespace Schulung
         private void SetMaximumResearch()
         {
             // set maximum
-            this.PointsResearch.Maximum = Points - (this.PointsCountry.Value + this.PointsEconomy.Value + this.PointsTerror.Value);
-
-            if (this.pointsControlResponseEnabled)
-            {
-                // update label to test input events
-                String response = "";
-                //new Random().Next(0, 4)
-                switch (this.lastTestResponseIndex)
-                {
-                    case 0: response = "BÄM! Event!";
-                        break;
-                    case 1: response = "Du hast mich geklickt?";
-                        break;
-                    case 2: response = "Can't touch this";
-                        break;
-                    case 3: response = "He, lass das!";
-                        break;
-                    case 4: response = "Autsch";
-                        break;
-                }
-
-                if (this.lastTestResponseIndex < 4)
-                {
-                    this.lastTestResponseIndex++;
-                }
-                else
-                {
-                    this.lastTestResponseIndex = 0;
-                }
-                this.PointsControlTestLabel.Text = response;
-                
-                DoubleAnimation da = new DoubleAnimation();
-                da.From = 0;
-                da.To = 1;
-                da.AutoReverse = false;
-                da.Duration = new Duration(TimeSpan.FromSeconds(0.3));
-                this.PointsControlTestTextBlock.BeginAnimation(OpacityProperty, da);
-            }
+            this.PointsResearch.Maximum = _points - (this.PointsCountry.Value + this.PointsEconomy.Value + this.PointsTerror.Value);
         }
 
         /// <summary>
@@ -274,12 +237,12 @@ namespace Schulung
             int sum = this.PointsCountry.Value + this.PointsEconomy.Value + this.PointsTerror.Value + this.PointsResearch.Value;
 
             // check sum 
-            if (sum == Points)
+            if (sum == _points)
             {
                 // go to next round
                 NextRound();
             }
-            else if(MessageBox.Show("Sie haben ihr Budget noch nicht komplett verteilt!\nWollen Sie trotzdem fortfahren?", "Warnung", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+            else if(MessageBox.Show("Sie haben nicht alle Punkte vergeben!\nWollen Sie trotzdem fortfahren?", "Warnung", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
             {
                 // go to next round
                 NextRound();
@@ -314,12 +277,6 @@ namespace Schulung
 
             // change points
             OnChangePoints();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.PointsControlTestLabel.Text = "";
-            this.pointsControlResponseEnabled = !this.pointsControlResponseEnabled;
         }
     }
 }

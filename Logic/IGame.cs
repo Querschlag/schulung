@@ -16,6 +16,11 @@ namespace Schulung.Logic
         event OnMessage Message;
 
         /// <summary>
+        ///  event handler for the budget reduction
+        /// </summary>
+        event OnBudget Budget;
+
+        /// <summary>
         ///  storage for the attack flag
         /// </summary>
         bool IsAttack { get; }
