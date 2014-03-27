@@ -11,19 +11,9 @@ namespace Schulung.Logic
     public interface IGame
     {
         /// <summary>
-        ///  storage for the country points
+        ///  event handler for the message event
         /// </summary>
-        double CountryPoints { get; }
-
-        /// <summary>
-        ///  storage for the economy points
-        /// </summary>
-        double EconomyPoints { get; }
-
-        /// <summary>
-        ///  storage for the terror points
-        /// </summary>
-        double TerrorPoint { get; }
+        event OnMessage Message;
 
         /// <summary>
         ///  storage for the attack flag

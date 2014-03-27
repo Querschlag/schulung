@@ -24,19 +24,22 @@
             <RowDefinition Height="25"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
-        
+
         <Image Source="Images/scan.jpg" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="250">
             <Image.BitmapEffect>
                 <DropShadowBitmapEffect />
             </Image.BitmapEffect>
         </Image>
-        
-        <TextBlock VerticalAlignment="Top" TextWrapping="Wrap" TextTrimming="WordEllipsis" Grid.Column="3" Grid.Row="1" FontSize="14" FontWeight="Bold">
-            Sie sind General Keith B. Alexander, der Direktor der NSA. Verteilen Sie Ihr Budget von 11 Milliarden Dollar auf die untenstehenden Bereiche.
-        </TextBlock>
-        
+        <StackPanel Grid.Column="3" Grid.Row="1">
+            <TextBlock VerticalAlignment="Top" TextWrapping="Wrap" TextTrimming="WordEllipsis" FontSize="14" FontWeight="Bold">
+                Sie sind General Keith B. Alexander, Direktor der NSA. Verteilen Sie Ihr Budget von 11 Milliarden Dollar auf die untenstehenden Bereiche.
+            </TextBlock>
+            <TextBlock VerticalAlignment="Top" TextWrapping="Wrap" TextTrimming="WordEllipsis" FontSize="13" FontWeight="Bold">
+                <LineBreak/>Aktuelles Jahr: <Run x:Name="LabelYear" />
+            </TextBlock>
+        </StackPanel>
         <TextBlock VerticalAlignment="Bottom" TextWrapping="Wrap" TextTrimming="WordEllipsis" Grid.Column="3" Grid.Row="1" FontSize="13">
-            <Run x:Name="LabenPoints" FontWeight="Bold" /> Punkte übrig.
+            <Run x:Name="LabenPoints" FontWeight="Bold" /><Run Text=" Milliarden Dollar" FontWeight="Bold" /> übrig.
         </TextBlock>
 
         <TextBlock Text="Auslandsüberwachung:" Grid.Row="4" Grid.Column="1" Margin="0,0,0,15" />
@@ -48,7 +51,7 @@
         <schule:PointsControl x:Name="PointsEconomy" Grid.Row="5" Grid.Column="3" ValueChanged="OnChangePoints" />
         <schule:PointsControl x:Name="PointsTerror" Grid.Row="6" Grid.Column="3" ValueChanged="OnChangePoints" />
         <schule:PointsControl x:Name="PointsResearch" Grid.Row="7" Grid.Column="3" ValueChanged="OnChangePoints"/>
-        
-        <Button x:Name="ButtonStart" Click="ButtonStart_Click" Content="Nächste Runde" Grid.Row="9" Grid.Column="3" HorizontalAlignment="Right" Width="100"/>
+
+        <Button x:Name="ButtonStart" Click="ButtonStart_Click" Content="Nächste Jahr" Grid.Row="9" Grid.Column="3" HorizontalAlignment="Right" Width="100"/>
     </Grid>
 </Window>
