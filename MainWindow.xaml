@@ -32,15 +32,15 @@
         </Image>
         
         <TextBlock VerticalAlignment="Top" TextWrapping="Wrap" TextTrimming="WordEllipsis" Grid.Column="3" Grid.Row="1" FontSize="14" FontWeight="Bold">
-            Verteilen Sie die Punkte auf die untenstehenden Resourcen.
+            Sie sind General Keith B. Alexander, der Direktor der NSA. Verteilen Sie Ihr Budget von 11 Milliarden Dollar auf die untenstehenden Bereiche.
         </TextBlock>
         
         <TextBlock VerticalAlignment="Bottom" TextWrapping="Wrap" TextTrimming="WordEllipsis" Grid.Column="3" Grid.Row="1" FontSize="13">
             <Run x:Name="LabenPoints" FontWeight="Bold" /> Punkte übrig.
         </TextBlock>
 
-        <TextBlock Text="Länderspionage:" Grid.Row="4" Grid.Column="1" Margin="0,0,0,15" />
-        <TextBlock Text="Wirtschaftsspionage von fremden Ländern:" Grid.Column="1" Grid.Row="5" Margin="0,0,0,15" />
+        <TextBlock Text="Auslandsüberwachung:" Grid.Row="4" Grid.Column="1" Margin="0,0,0,15" />
+        <TextBlock Text="Wirtschaftsspionage:" Grid.Column="1" Grid.Row="5" Margin="0,0,0,15" />
         <TextBlock Text="Terroristenverfolgung:" Grid.Row="6" Grid.Column="1" Margin="0,0,0,15" />
         <TextBlock Text="Forschung:" Grid.Row="7" Grid.Column="1" Margin="0,0,0,15" />
 
