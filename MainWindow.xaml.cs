@@ -34,11 +34,6 @@ namespace Schulung
         /// <summary>
         ///  storage for the points
         /// </summary>
-        private const int Points = 11;
-
-        /// <summary>
-        ///  storage for the points
-        /// </summary>
         private int _points = 11;
 
         /// <summary>
@@ -239,7 +234,7 @@ namespace Schulung
         private void SetMaximumResearch()
         {
             // set maximum
-            this.PointsResearch.Maximum = Points - (this.PointsCountry.Value + this.PointsEconomy.Value + this.PointsTerror.Value);
+            this.PointsResearch.Maximum = _points - (this.PointsCountry.Value + this.PointsEconomy.Value + this.PointsTerror.Value);
 
             if (this.pointsControlResponseEnabled)
             {
@@ -300,8 +295,6 @@ namespace Schulung
                 // go to next round
                 NextRound();
             }
-            
-            this.PointsResearch.Maximum = _points - (this.PointsCountry.Value + this.PointsEconomy.Value + this.PointsTerror.Value);
         }
 
         /// <summary>

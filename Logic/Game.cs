@@ -173,7 +173,7 @@ namespace Schulung.Logic
                 if (randomEvent == 3)
                 {
                     // new budget
-                    double budget = this._points * this._random.Next(1, 4);
+                    double budget = this._points * this._random.Next(2, 4);
 
                     // increase budget
                     if (Budget != null) Budget((int)Math.Ceiling(budget));
@@ -184,13 +184,18 @@ namespace Schulung.Logic
                 else if (randomEvent == 5)
                 {
                     // new budget
-                    double budget = this._points / this._random.Next(1, 4);
+                    double budget = this._points / this._random.Next(2, 4);
 
                     // increase budget
                     if (Budget != null) Budget((int)Math.Ceiling(budget));
 
                     // show message
                     if (Message != null) Message(MessageResource.GameEventGovermentShutdown);
+                }
+                else
+                {
+                    // reset budget
+                    if (Budget != null) Budget(this._points);
                 }
             }
         }
@@ -447,10 +452,10 @@ namespace Schulung.Logic
 
             // maximum value
             int maximum = (int)(Math.Round(this._researchPoints == 0 ? 1 : this._researchPoints, 4) * factor);
-
+            
             // generate random number
-            double result = (double)this._random.Next(factor, maximum + 1) / factor;
-
+            double result = ((double)this._random.Next(factor, maximum) - 1.00) / factor;
+            
             // return result
             return result;
         }
