@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Schulung.Logic;
 
 namespace Schulung
 {
@@ -21,7 +22,7 @@ namespace Schulung
         /// <summary>
         ///  default constructor
         /// </summary>
-        public GameOver()
+        public GameOver(IGame game)
         {
             // initialize components
             InitializeComponent();
@@ -30,6 +31,7 @@ namespace Schulung
             this.LabelGameOverAttack.Visibility = Visibility.Collapsed;
             this.LabelGameOverAssault.Visibility = Visibility.Collapsed;
             this.LabelGameOverEconomyCrises.Visibility = Visibility.Collapsed;
+            this.LabelGameOverScore.Text = "Score: " + String.Format("{0:0.}", game.GetGameScore);
         }
 
         /// <summary>

@@ -478,5 +478,13 @@ namespace Schulung.Logic
         {
             get { return (this._dangerEconomy > this._economyPoints); }
         }
+
+        /// <summary>
+        ///  method to get score points for current game
+        /// </summary>
+        public double GetGameScore
+        {
+            get { return this._dangerCountry + this._dangerEconomy + this._dangerTerror; }
+        }
     }
 }

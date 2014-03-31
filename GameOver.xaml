@@ -10,6 +10,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Image Source="Images\gameOver.png" Grid.Row="0" />
+        <TextBlock x:Name="LabelGameOverScore" Margin="128,0,128,5" HorizontalAlignment="Center" Text="Score: " FontSize="14" FontWeight="Bold" TextWrapping="Wrap" TextTrimming="WordEllipsis" TextAlignment="Center" Height="44" VerticalAlignment="Bottom" Width="238" />
         <TextBlock x:Name="LabelGameOverAttack" Margin="0,0,0,5" HorizontalAlignment="Center" Text="Ihr Land wurde von feindlichen Kräften besetzt!!" FontSize="14" TextWrapping="Wrap" TextTrimming="WordEllipsis" Grid.Row="2" TextAlignment="Center" />
         <TextBlock x:Name="LabelGameOverAssault" Margin="0,0,0,5" HorizontalAlignment="Center" Text="Sie wurden Ziel eines Terroranschlags!!" FontSize="14" TextWrapping="Wrap" TextTrimming="WordEllipsis" Grid.Row="3" />
         <TextBlock x:Name="LabelGameOverEconomyCrises" Margin="0,0,0,5" HorizontalAlignment="Center" Text="Alle Industrienationen sind mittlerweile immun gegen Ihre Wirtschaftsspionage.&#10;Sie wurden wegen Inkompetenz gefeuert!!" FontSize="14" TextWrapping="Wrap" TextTrimming="WordEllipsis" Grid.Row="4" TextAlignment="Center" />

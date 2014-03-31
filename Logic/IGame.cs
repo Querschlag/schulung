@@ -36,6 +36,11 @@ namespace Schulung.Logic
         bool IsEconomyCrises { get; }
 
         /// <summary>
+        ///  method to get score points for current game
+        /// </summary>
+        double GetGameScore { get; }
+
+        /// <summary>
         ///   method to calculate event
         /// </summary>
         /// <param name="country"> points used for country </param>

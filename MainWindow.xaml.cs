@@ -119,7 +119,7 @@ namespace Schulung
             if (this._gameOverDialog == null)
             {
                 // create game over dialog
-                this._gameOverDialog = new GameOver();
+                this._gameOverDialog = new GameOver(this._game);
 
                 // show dialog
                 this._gameOverDialog.Show();
@@ -141,7 +141,7 @@ namespace Schulung
             if (this._gameOverDialog == null)
             {
                 // create game over dialog
-                this._gameOverDialog = new GameOver();
+                this._gameOverDialog = new GameOver(this._game);
 
                 // show dialog
                 this._gameOverDialog.Show();
@@ -163,7 +163,7 @@ namespace Schulung
             if (this._gameOverDialog == null)
             {
                 // create game over dialog
-                this._gameOverDialog = new GameOver();
+                this._gameOverDialog = new GameOver(this._game);
 
                 // show dialog
                 this._gameOverDialog.Show();
