@@ -1,9 +1,10 @@
-﻿using System;
+﻿using GameLibrary.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Schulung.Logic
+namespace GameLibrary.Logic
 {
     /// <summary>
     ///  delegate for the attack event
@@ -23,7 +24,7 @@ namespace Schulung.Logic
     /// <summary>
     ///  class to check game results
     /// </summary>
-    public class Check
+    public class Check : ICheck
     {
         /// <summary>
         ///  event handler for the attack event

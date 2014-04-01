@@ -58,17 +58,9 @@
     <Compile Include="GameOver.xaml.cs">
       <DependentUpon>GameOver.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Logic\Check.cs" />
-    <Compile Include="Logic\IGame.cs" />
-    <Compile Include="MessageResource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MessageResource.resx</DependentUpon>
-    </Compile>
     <Compile Include="PointsControl.xaml.cs">
       <DependentUpon>PointsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Logic\Game.cs" />
     <Page Include="GameOver.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -104,10 +96,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="MessageResource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>MessageResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -123,6 +111,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\scan.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="GameLibrary\GameLibrary.csproj">
+      <Project>{95b6082f-f861-46ce-89db-e639b1698b46}</Project>
+      <Name>GameLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

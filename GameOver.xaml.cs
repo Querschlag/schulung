@@ -10,7 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Schulung.Logic;
+using GameLibrary.Interfaces;
 
 namespace Schulung
 {
@@ -31,7 +31,7 @@ namespace Schulung
             this.LabelGameOverAttack.Visibility = Visibility.Collapsed;
             this.LabelGameOverAssault.Visibility = Visibility.Collapsed;
             this.LabelGameOverEconomyCrises.Visibility = Visibility.Collapsed;
-            this.LabelGameOverScore.Text = "Score: " + String.Format("{0:0.}", game.GetGameScore);
+            this.LabelGameOverScore.Text = "Score: " + String.Format("{0:0.}", game.GameScore);
         }
 
         /// <summary>

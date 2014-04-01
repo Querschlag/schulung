@@ -11,8 +11,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Schulung.Logic;
 using System.Windows.Media.Animation;
+using GameLibrary.Interfaces;
+using GameLibrary.Logic;
 
 namespace Schulung
 {
@@ -49,7 +50,7 @@ namespace Schulung
         /// <summary>
         ///  storage for the check class
         /// </summary>
-        private Check _check;
+        private ICheck _check;
 
         /// <summary>
         ///  storage for the game over dialog

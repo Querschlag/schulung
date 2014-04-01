@@ -3,8 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Schulung.Logic
+namespace GameLibrary.Interfaces
 {
+    /// <summary>
+    ///  event delegate for the on message event
+    /// </summary>
+    /// <param name="message"> message </param>
+    public delegate void OnMessage(string message);
+
+    /// <summary>
+    ///  event delegate for the budget reduction event
+    /// </summary>
+    /// <param name="points"> budget points </param>
+    /// <param name="message"> message </param>
+    public delegate void OnBudget(int points);
+
     /// <summary>
     ///  interface implement the functionality of game
     /// </summary>
@@ -36,11 +49,6 @@ namespace Schulung.Logic
         bool IsEconomyCrises { get; }
 
         /// <summary>
-        ///  method to get score points for current game
-        /// </summary>
-        double GetGameScore { get; }
-
-        /// <summary>
         ///   method to calculate event
         /// </summary>
         /// <param name="country"> points used for country </param>
@@ -48,5 +56,10 @@ namespace Schulung.Logic
         /// <param name="terror"> points used for terror </param>
         /// <param name="research"> points used for personal </param>
         void Run(int country, int economy, int terror, int research);
+
+        /// <summary>
+        ///  method to get score points for current game
+        /// </summary>
+        double GameScore { get; }
     }
 }
